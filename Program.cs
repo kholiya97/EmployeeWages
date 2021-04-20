@@ -8,7 +8,7 @@ namespace Employeewage
 {       /* UC10 Ability to manage Employee Wage of multiple companies
         */
 
-    class Program
+    class EmployeeWageComputationProblem
     {
         public string company;
         public int empRatePerHour;
