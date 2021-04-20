@@ -6,45 +6,47 @@ using System.Threading.Tasks;
 
 namespace EmpWageComputation
 {
-	class CompanyEmpWage
-	{ //instance variable
-		public string company;
-		public int empRatePerHour;
-		public int numOfWorkingDays;
-		public int maxHoursPerMonth;
-		public int totalEmpWage;
+    class CompanyEmpWage
+    { //instance variable
+        public string company;
+        public int empRatePerHour;
+        public int numOfWorkingDays;
+        public int maxHoursPerMonth;
+        public int totalEmpWage;
+        public int dailyWage;
+        public int TotalWageAlongWithDailyWage;
+        public CompanyEmpWage(string company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth) //parameterized constructer
+        {
+            //invoke current class constructor
+            this.company = company;
+            this.empRatePerHour = empRatePerHour;
+            this.numOfWorkingDays = numOfWorkingDays;
+            this.maxHoursPerMonth = maxHoursPerMonth;
+        }
 
-		public CompanyEmpWage(string company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth) //parameterized constructer
-		{
-			//invoke current class constructor
-			this.company = company;
-			this.empRatePerHour = empRatePerHour;
-			this.numOfWorkingDays = numOfWorkingDays;
-			this.maxHoursPerMonth = maxHoursPerMonth;
-		}
+        public void setTotalEmpWage(int totalEmpWage) //set method
+        {
+            this.totalEmpWage = totalEmpWage;
+        }
 
-		public void setTotalEmpWage(int totalEmpWage) //set method
-		{
-			this.totalEmpWage = totalEmpWage;
-		}
+        public string toString() //instance method 
+        {
 
-		public string toString() //instance method 
-		{
-			return "total EmpWage for company :" + this.company + " is :" + this.totalEmpWage;
-		}
-	}
+            return "\nTotal Emp Wage for Company : " + this.company + " is :" + this.totalEmpWage + "\nDaily Wage for Company : " + this.company + " is :" + this.dailyWage + "\nTotal  Emp wage along with daily Wage is " + this.TotalWageAlongWithDailyWage;
+        }
+    }
     class EmpWageBuilderArray : IComputeEmpWage   //child class
     {
         //constants
         public const int IS_PART_TIME = 1;
         public const int IS_FULL_TIME = 2;
 
-        private LinkedList<CompanyEmpWage> companyEmpWaeList;
+        private LinkedList<CompanyEmpWage> companyEmpWageList;
         private Dictionary<string, CompanyEmpWage> companyToEmpWageMap;
 
         public EmpWageBuilderArray() //constructor
         {
-            this.companyEmpWaeList = new LinkedList<CompanyEmpWage>();
+            this.companyEmpWageList = new LinkedList<CompanyEmpWage>();
             this.companyToEmpWageMap = new Dictionary<string, CompanyEmpWage>();
 
         }
@@ -52,13 +54,13 @@ namespace EmpWageComputation
         public void AddCompanyEmpWage(string company, int empRatePerHour, int numOfWorkingDays, int maxHourPerMonth)
         {//body of interface member
             CompanyEmpWage companyEmpWage = new CompanyEmpWage(company, empRatePerHour, numOfWorkingDays, maxHourPerMonth);
-            this.companyEmpWaeList.AddLast(companyEmpWage);
+            this.companyEmpWageList.AddLast(companyEmpWage);
             this.companyToEmpWageMap.Add(company, companyEmpWage);
 
         }
         public void computeEmpWage() //body of interface member
         {
-            foreach (CompanyEmpWage companyEmpWage in this.companyEmpWaeList)
+            foreach (CompanyEmpWage companyEmpWage in this.companyEmpWageList)
             {
                 companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
                 Console.WriteLine(companyEmpWage.toString());
@@ -87,6 +89,8 @@ namespace EmpWageComputation
                 totalEmpHrs += empHrs;
                 Console.WriteLine("Days" + totalWorkingDays + "EmpHrs : " + empHrs);
             }
+            companyEmpWage.dailyWage = empHrs * companyEmpWage.empRatePerHour;
+            companyEmpWage.TotalWageAlongWithDailyWage = totalEmpHrs * companyEmpWage.empRatePerHour + companyEmpWage.dailyWage;
             return totalEmpHrs * companyEmpWage.empRatePerHour;
         }
         public int getTotalWage(string company) //using get method
@@ -109,11 +113,10 @@ namespace EmpWageComputation
             empWageBuilder.AddCompanyEmpWage("DMart", 20, 2, 10); //call AddCompany method
             empWageBuilder.AddCompanyEmpWage("Reliance", 10, 4, 20);
             empWageBuilder.computeEmpWage();
-            Console.WriteLine("Total Wage for DMart Comapny " + empWageBuilder.getTotalWage("DMart"));
+
             Console.Read();
         }
 
 
     }
 }
-
