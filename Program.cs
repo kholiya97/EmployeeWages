@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PracticeProblem
+namespace Employeewage
 {       /* UC10 Ability to manage Employee Wage of multiple companies
         */
 
-    class EmployeeWageComputationProblem
+    class Program
     {
         public string company;
         public int empRatePerHour;
