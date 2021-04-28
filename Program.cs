@@ -8,12 +8,18 @@ namespace employeeewagee
 {
     class Program
     {
+        const int FullTime = 1;                                        //creating a local variable
+        const int PartTime = 2;
         static void Main(string[] args)
         {
             // Constant Variable
+
+
+
             int FullTime = 1;                                        //creating a local variable
 
             int PartTime = 2
+
             int empRatePerHour = 20;
 
             //Local Variables
@@ -21,6 +27,31 @@ namespace employeeewagee
             int empWage = 0;
 
             Random random = new Random();                           //Generating Random value
+
+            int employeeCheck = random.Next(0, 3);                  // assigning Random value to the variable 
+            Console.WriteLine("Random Value: " + employeeCheck);
+
+            //using Case statement 
+            switch (employeeCheck)
+            {
+                case FullTime:
+                    empHrs = empHrs + 8;
+                    break;
+
+                case PartTime:
+                    empHrs = empHrs + 4;
+                    break;
+
+                default:
+                    empHrs = 0;
+                    break;
+            }
+
+
+            // computation
+            empWage = empRatePerHour * empHrs;
+            Console.WriteLine("Employee wage per day: " + empWage);
+
  
             int employeeCheck = random.Next(0, 3);                  // assigning Random value to the variable 
             Console.WriteLine("Random Value: " + employeeCheck);
@@ -74,6 +105,7 @@ namespace employeeewagee
             {
                 Console.WriteLine("Employee ABSENT");
             }
+
 
 
             Console.Read();
